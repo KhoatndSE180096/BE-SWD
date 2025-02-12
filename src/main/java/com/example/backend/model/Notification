@@ -1,0 +1,24 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+
+@Entity
+@Data
+@Table(name = "Notification")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Notification {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "NotificationID")
+    private int notificationID;
+
+    @Column(name = "Description", nullable = false, length = 255)
+    private String description;
+
+    @Column(name = "StatusNotification", nullable = false, length = 255)
+    private String statusNotification;
+}

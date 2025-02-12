@@ -1,0 +1,59 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+import java.util.Set;
+
+@Entity
+@Data
+@Table(name = "attendance") 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Attendance{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "AttendanceID")
+    private int attendanceID;
+
+    @NotNull(message = "Check in is required")
+    @Column(name = "CheckIn", updatable = false)
+    private LocalDateTime checkIn;
+
+
+    @Column(name = "CheckOut")
+    private LocalDateTime checkOut;
+
+    @NotNull(message = "Break time is required")
+    @PositiveOrZero(message = "Break time must be positive or zero")
+    @Column(name = "BreakTime")
+    private int breakTime;
+
+    @Size(max = 100, message = "Note must be less than 100 characters")
+    @Column(name = "Note")
+    private String note;
+
+    @ManyToOne
+    @JoinColumn(name = "EmployeeID", referencedColumnName = "UserID", nullable = false)
+    private User employee;
+
+    @ManyToOne
+    @JoinColumn(name = "ShiftsID", referencedColumnName = "ShiftsID", nullable = false)
+    private Shifts shifts;
+
+    @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<TimeAccumulation> timeAccumulations;
+
+    @PrePersist
+    protected void onCreate() {
+        this.checkIn = LocalDateTime.now();
+        this.checkOut = null;
+    }
+
+}

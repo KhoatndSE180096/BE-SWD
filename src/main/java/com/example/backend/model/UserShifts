@@ -1,0 +1,33 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+
+@Entity
+@Data
+@Table(name = "UserShifts")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class UserShifts {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserShiftsID")
+    private int userShiftsID;
+
+    @ManyToOne
+    @JoinColumn(name = "EmployeeID", nullable = false)
+    private User employee;
+
+    @ManyToOne
+    @JoinColumn(name = "ShiftsID", nullable = false)
+    private Shifts shift;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status", nullable = false)
+    private UserShiftsStatus status;
+}

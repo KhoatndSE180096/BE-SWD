@@ -1,0 +1,40 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Data
+@Table(name = "Restaurant") 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Restaurant{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RestaurantID")
+    private int restaurantID;
+
+    @NotNull(message = "Location is required")
+    @Size(max = 255, message = "Location must be less than 255 characters")
+    @Column(name = "Location")
+    private String location;
+
+    @NotNull(message = "Rating is required")
+    @Size(max = 100, message = "Rating must be less than 100 characters")
+    @Column(name = "Rating")
+    private String rating;
+
+    @OneToOne
+    @JoinColumn(name = "ManageBy", referencedColumnName = "UserID", nullable = false)
+    private User manager;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<User> users;
+}

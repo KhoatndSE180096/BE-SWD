@@ -1,0 +1,52 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Data
+@Table(name = "Event") 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Event{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EventID")
+    private int eventID;
+
+    @NotNull(message = "Title is required")
+    @Size(max = 20, message = "Title must be less than 20 characters")
+    @Column(name = "Title")
+    private String title;
+
+    @NotNull(message = "EventType is required")
+    @Size(max = 20, message = "EventType must be less than 20 characters")
+    @Column(name = "EventType")
+    private String eventType;
+
+    @NotNull(message = "Content is required")
+    @Size(max = 255, message = "Content must be less than 255 characters")
+    @Column(name = "Content")
+    private String content;
+
+    @NotNull(message = "Date Created at timestamp is required")
+    @Column(name = "DateCreated", updatable = false)
+    private LocalDateTime dateCreated;
+
+    @ManyToOne
+    @JoinColumn(name = "CreatedBy", referencedColumnName = "UserID", nullable = false)
+    private User createdBy;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreated = LocalDateTime.now();
+    }
+}

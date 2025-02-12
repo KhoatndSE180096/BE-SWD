@@ -1,0 +1,57 @@
+package com.example.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+
+import com.example.backend.enums.ApplicationStatus;
+
+@Entity
+@Data
+@Table(name = "Application") 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Application{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ApplicationID")
+    private int applicationID;
+
+    @NotNull(message = "RequestMessage is required")
+    @Size(max = 255, message = "RequestMessage must be less than 255 characters")
+    @Column(name = "RequestMessage")
+    private String requestMessage;
+
+    @NotNull(message = "ResponseMessage is required")
+    @Size(max = 255, message = "ResponseMessage must be less than 255 characters")
+    @Column(name = "ResponseMessage")
+    private String responseMessage;
+
+    @NotNull(message = "Created at timestamp is required")
+    @Column(name = "CreatedAt", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Status is required")
+    @Column(name = "Status")
+    private ApplicationStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "EmployeeID", referencedColumnName = "UserID", nullable = false)
+    private User employee;
+
+    @ManyToOne
+    @JoinColumn(name = "ManagedBy", referencedColumnName = "UserID", nullable = false)
+    private User managedBy; 
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+}
