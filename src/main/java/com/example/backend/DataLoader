@@ -1,0 +1,62 @@
+package com.example.backend;
+
+import com.example.backend.model.User;
+import com.example.backend.model.Role;
+import com.example.backend.model.Restaurant;
+import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.RoleRepository;
+import com.example.backend.repository.RestaurantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataLoader implements CommandLineRunner {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Create roles
+        Role role1 = new Role();
+        role1.setRoleName("Manager");
+        roleRepository.save(role1);
+
+        Role role2 = new Role();
+        role2.setRoleName("Employee");
+        roleRepository.save(role2);
+
+        // Create restaurant
+        Restaurant restaurant = new Restaurant();
+        restaurant.setRestaurantName("Example Restaurant");
+        restaurantRepository.save(restaurant);
+
+        // Create users
+        User user1 = new User();
+        user1.setUsername("john_doe");
+        user1.setPasswordHash("hashed_password");
+        user1.setFirstName("John");
+        user1.setLastName("Doe");
+        user1.setEmail("john.doe@example.com");
+        user1.setRole(role1);
+        user1.setRestaurant(restaurant);
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setUsername("jane_smith");
+        user2.setPasswordHash("hashed_password");
+        user2.setFirstName("Jane");
+        user2.setLastName("Smith");
+        user2.setEmail("jane.smith@example.com");
+        user2.setRole(role2);
+        user2.setRestaurant(restaurant);
+        userRepository.save(user2);
+    }
+}
