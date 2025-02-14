@@ -1,32 +1,31 @@
 package com.example.backend.model;
 
+import com.example.backend.enums.RoleName;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.AccessLevel;
 import lombok.FieldDefaults;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "Role") 
+@Table(name = "Role")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role{
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleID")
     private int roleID;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Role name is required")
-    @Size(max = 20)
-    @Column(name = "RoleName")
-    private String roleName;
+    @Column(name = "RoleName", nullable = false)
+    private RoleName roleName;
 
-    @Size(max = 255,message = "Description must be less than 255 character")
+    @Size(max = 255, message = "Description must be less than 255 characters")
     @Column(name = "Description")
     private String description;
 

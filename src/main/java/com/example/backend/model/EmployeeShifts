@@ -1,33 +1,31 @@
 package com.example.backend.model;
 
+import com.example.backend.enums.EmployeeShiftsStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.AccessLevel;
 import lombok.FieldDefaults;
 
 @Entity
 @Data
-@Table(name = "UserShifts")
+@Table(name = "EmployeeShifts")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserShifts {
+public class EmployeeShifts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserShiftsID")
-    private int userShiftsID;
+    @Column(name = "ESID")
+    private int esid;
 
     @ManyToOne
     @JoinColumn(name = "EmployeeID", nullable = false)
-    private User employee;
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "ShiftsID", nullable = false)
-    private Shifts shift;
+    private Shifts shifts;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
-    private UserShiftsStatus status;
+    private EmployeeShiftsStatus status;
 }

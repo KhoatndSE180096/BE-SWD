@@ -24,20 +24,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create roles
-        Role role1 = new Role();
-        role1.setRoleName("Manager");
-        roleRepository.save(role1);
-
-        Role role2 = new Role();
-        role2.setRoleName("Employee");
-        roleRepository.save(role2);
-
-        // Create restaurant
-        Restaurant restaurant = new Restaurant();
-        restaurant.setRestaurantName("Example Restaurant");
-        restaurantRepository.save(restaurant);
-
         // Create users
         User user1 = new User();
         user1.setUsername("john_doe");
@@ -45,8 +31,6 @@ public class DataLoader implements CommandLineRunner {
         user1.setFirstName("John");
         user1.setLastName("Doe");
         user1.setEmail("john.doe@example.com");
-        user1.setRole(role1);
-        user1.setRestaurant(restaurant);
         userRepository.save(user1);
 
         User user2 = new User();
@@ -55,8 +39,6 @@ public class DataLoader implements CommandLineRunner {
         user2.setFirstName("Jane");
         user2.setLastName("Smith");
         user2.setEmail("jane.smith@example.com");
-        user2.setRole(role2);
-        user2.setRestaurant(restaurant);
         userRepository.save(user2);
     }
 }
