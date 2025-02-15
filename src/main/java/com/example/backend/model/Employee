@@ -3,28 +3,33 @@ package com.example.backend.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.example.backend.enums.EmployeeStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.AccessLevel;
 import lombok.FieldDefaults;
-import java.util.List;
 import java.util.Set;
 
 @Data
-@Document(collection = "users")
+@Document(collection = "employees")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class Employee {
 
     @Id
-    private String userID;
+    private String employeeID;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Status is required")
+    private EmployeeStatus status;
 
     @NotNull(message = "Username is required")
     @Size(max = 255, message = "Username must be less than 255 characters")
     private String username;
 
     @NotNull(message = "Password hash is required")
+    @Size(max = 50, message = "Password hash must be less than 50 characters")
     private String passwordHash;
 
     @NotNull(message = "First name is required")
@@ -41,11 +46,14 @@ public class User {
     private String email;
 
     @DBRef
-    private Role role;
+    private Restaurant restaurant;
 
     @DBRef
-    private Set<Application> managedApplications;
+    private Set<Attendance> attendances;
 
     @DBRef
-    private Set<Event> managedEvents;
+    private Set<EmployeeApplication> employeeApplications;
+
+    @DBRef
+    private Set<EmployeeShifts> employeeShifts;
 }

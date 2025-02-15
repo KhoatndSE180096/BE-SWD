@@ -1,0 +1,34 @@
+package com.example.backend.model;
+
+import com.example.backend.enums.ResignationStatus;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.AccessLevel;
+import lombok.FieldDefaults;
+import java.time.LocalDateTime;
+
+@Entity
+@Data
+@Table(name = "Resignation")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Resignation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ResignationID")
+    private int resignationID;
+
+    @OneToOne
+    @JoinColumn(name = "EAID", nullable = false)
+    private EmployeeApplication employeeApplication;
+
+    @Column(name = "ResignReason", length = 255)
+    private String resignReason;
+
+    @Column(name = "LastWorkingDate", nullable = false)
+    private LocalDateTime lastWorkingDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status", nullable = false)
+    private ResignationStatus status;
+}

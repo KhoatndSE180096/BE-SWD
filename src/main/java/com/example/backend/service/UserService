@@ -18,7 +18,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(int userId) {
+    public Optional<User> getUserById(String userId) {
         return userRepository.findById(userId);
     }
 
@@ -26,7 +26,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(int userId, User userDetails) {
+    public User updateUser(String userId, User userDetails) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.setUsername(userDetails.getUsername());
         user.setPasswordHash(userDetails.getPasswordHash());
@@ -34,11 +34,12 @@ public class UserService {
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
         user.setRole(userDetails.getRole());
-        user.setRestaurant(userDetails.getRestaurant());
+        user.setManagedApplications(userDetails.getManagedApplications());
+        user.setManagedEvents(userDetails.getManagedEvents());
         return userRepository.save(user);
     }
 
-    public void deleteUser(int userId) {
+    public void deleteUser(String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
     }
