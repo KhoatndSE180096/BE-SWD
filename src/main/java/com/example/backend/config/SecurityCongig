@@ -21,7 +21,9 @@ public class SecurityConfig {
                 .permitAll()
             .and()
             .logout()
-                .permitAll();
+                .permitAll()
+            .and()
+            .csrf().disable(); // Disable CSRF protection for simplicity
         return http.build();
     }
 }

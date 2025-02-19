@@ -41,5 +41,8 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
-    }
+}
+    @PostMapping("/saveDirectly")
+    public void saveUserDirectly() {
+        userService.saveUserDirectly();
 }
