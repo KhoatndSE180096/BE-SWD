@@ -43,16 +43,4 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
     }
-
-    public void saveUserDirectly() {
-        User user = new User();
-        user.setUsername("jane_doe");
-        user.setPasswordHash("hashed_password");
-        user.setFirstName("Jane");
-        user.setLastName("Doe");
-        user.setEmail("jane.doe@example.com");
-
-        User savedUser = userRepository.save(user);
-        System.out.println("User saved with ID: " + savedUser.getUserID());
-    }
 }

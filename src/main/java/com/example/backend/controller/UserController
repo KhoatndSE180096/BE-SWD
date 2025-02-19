@@ -42,10 +42,4 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
-
-    // Endpoint to save a user directly for testing purposes
-    @PostMapping("/saveDirectly")
-    public void saveUserDirectly() {
-        userService.saveUserDirectly();
-    }
 }
