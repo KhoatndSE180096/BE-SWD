@@ -1,7 +1,7 @@
 package com.example.backend.service.impl;
 
-import com.example.backend.dto.CreateUserDTO;
-import com.example.backend.dto.UpdateUserDTO;
+import com.example.backend.dto.request.CreateUserDTO;
+import com.example.backend.dto.request.UpdateUserDTO;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;

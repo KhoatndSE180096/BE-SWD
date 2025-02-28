@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.CreateUserDTO;
-import com.example.backend.dto.UpdateUserDTO;
+import com.example.backend.dto.request.CreateUserDTO;
+import com.example.backend.dto.request.UpdateUserDTO;
 import com.example.backend.model.User;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
